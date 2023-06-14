@@ -6,6 +6,7 @@ const baseUrl = '/api/v1'
 const db = require('./utils/database')
 
 const airplaneRouter = require('./airplane/airplane.router')
+const boardingPassRouter = require('./boarding_pass/boarding_pass.router')
 
 const app = express()
 
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 })
 
 app.use(baseUrl, airplaneRouter)
+app.use(baseUrl, boardingPassRouter)
 
 app.get('*', (req, res) => {
     responses.error({

@@ -7,6 +7,7 @@ const db = require('./utils/database')
 
 const airplaneRouter = require('./airplane/airplane.router')
 const boardingPassRouter = require('./boarding_pass/boarding_pass.router')
+const passengerRouter = require('./passenger/passenger.router')
 
 const app = express()
 
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 
 app.use(baseUrl, airplaneRouter)
 app.use(baseUrl, boardingPassRouter)
+app.use(baseUrl, passengerRouter)
 
 app.get('*', (req, res) => {
     responses.error({

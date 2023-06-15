@@ -2,10 +2,10 @@ const boardingPassController = require('./boardingPass-controller')
 const responses = require('../utils/handleResponses')
 
 const boardingPassService = {
-  getBoardingPassById: (req, res) => {
+  getBoardingPassByFlightId: (req, res) => {
     const { id } = req.params
-    
-    boardingPassController.findBoardingPassById(id)
+
+    boardingPassController.findBoardingPassByFlightId(id)
       .then(data => {
         responses.success({
           res,

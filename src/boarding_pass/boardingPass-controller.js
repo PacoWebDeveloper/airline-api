@@ -1,8 +1,10 @@
 const BoardingPass = require('../models/boarding_pass')
 
 const boardingPassController = {
-  findBoardingPassById: async (id) => {
-    const data = await BoardingPass.findByPk(id)
+  findBoardingPassByFlightId: async (flighId) => {
+    const data = await BoardingPass.findOne({
+      where: { flight_id: flighId }
+    })
 
     return data
   }

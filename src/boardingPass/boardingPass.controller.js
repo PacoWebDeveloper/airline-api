@@ -1,4 +1,4 @@
-const BoardingPass = require('../models/boarding_pass')
+const BoardingPass = require('../models/boardingPass.model')
 
 const boardingPassController = {
   findBoardingPassByFlightId: async (flighId) => {

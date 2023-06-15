@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const boardingPassService = require('./boarding_pass.services')
+const boardingPassService = require('./boardingPass.services')
 
 router.get('/flights/:id/passengers', boardingPassService.getBoardingPassByFlightId)
 

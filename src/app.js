@@ -6,7 +6,7 @@ const baseUrl = '/api/v1'
 const db = require('./utils/database')
 
 const airplaneRouter = require('./airplane/airplane.router')
-const boardingPassRouter = require('./boarding_pass/boarding_pass.router')
+const boardingPassRouter = require('./boardingPass/boardingPass.router')
 const passengerRouter = require('./passenger/passenger.router')
 
 const app = express()

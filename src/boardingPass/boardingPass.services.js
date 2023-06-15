@@ -1,4 +1,4 @@
-const boardingPassController = require('./boardingPass-controller')
+const boardingPassController = require('./boardingPass.controller')
 const responses = require('../utils/handleResponses')
 
 const boardingPassService = {

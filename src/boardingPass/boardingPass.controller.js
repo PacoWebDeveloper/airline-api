@@ -1,7 +1,7 @@
 const BoardingPass = require('../models/boardingPass.model')
 const flight = require('../flight/flight.controller')
 const passengerController = require('../passenger/passenger.controller')
-const seatTypeController = require('../seat/seat.controller')
+const seatTypeController = require('../seatType/seatType.controller')
 
 const boardingPassController = {
   findBoardingPassByFlightId: async (flighId) => {

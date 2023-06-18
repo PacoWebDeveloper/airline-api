@@ -2,6 +2,8 @@ const BoardingPass = require('../models/boardingPass.model')
 const flight = require('../flight/flight.controller')
 const passengerController = require('../passenger/passenger.controller')
 const seatTypeController = require('../seat/seat.controller')
+const assignSeat = require('../utils/assignSeat')
+const { Op } = require('sequelize')
 
 const boardingPassController = {
   findBoardingPassByFlightId: async (flighId) => {
@@ -26,6 +28,8 @@ const boardingPassController = {
 
     /* const seatData = await seatTypeController.findSeatBySeatTypeId(data.seat_type_id) */
     
+    passengersArr = assignSeat(passengersArr, flightData.dataValues.airplane_id, )
+    
     const newFlightData = {
       ...flightData.dataValues, 
       passengers: passengersArr
@@ -38,6 +42,15 @@ const boardingPassController = {
     const data = await BoardingPass.findAll({
       where: {
         purchase_id
+      }
+    })
+    return data
+  },
+
+  findOccupiedSeats: async () => {
+    const data = await BoardingPass.findAll({
+      where: {
+        seat_id: {[Op.not]: null}
       }
     })
     return data

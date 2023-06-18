@@ -9,16 +9,14 @@ const boardingPassService = {
       .then(data => {
         responses.success({
           res,
-          status: 200,
-          message: `Boarding pass with id: ${id} was retrieved successfully`,
+          code: 200,
           data
         })
       })
       .catch(err => {
         responses.error({
           res,
-          status: 400,
-          message: 'Boarding pass not found',
+          code: 400,
           data: err
         })
       })

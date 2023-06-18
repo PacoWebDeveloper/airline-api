@@ -5,28 +5,53 @@ const seatTypeController = require('../seatType/seatType.controller')
 
 const boardingPassController = {
   findBoardingPassByFlightId: async (flighId) => {
+
+    let passengersArr = []
     
     const data = await BoardingPass.findByPk(flighId)
+
+    const customersByPurchase = await boardingPassController.findBoargingPassByPurchaseId(data.dataValues.purchase_id)
     
     const flightData = await flight.findFlightById(data.flight_id)
     
-    const passengerData = await passengerController.findPassengerById(data.passenger_id)
+    for(let customer of customersByPurchase){
+      
+      const passenger = await passengerController.findPassengerById(customer.dataValues.passenger_id)
+      passenger.dataValues.boardingPassId = data.dataValues.boarding_pass_id
+      passenger.dataValues.purchaseId = data.dataValues.purchase_id
+      passenger.dataValues.seatTypeId = data.dataValues.seat_type_id
 
-    const seatData = await seatTypeController.findSeatBySeatTypeId(data.seat_type_id)
+      passengersArr.push(passenger) 
+    }
+
+    /* const seatData = await seatTypeController.findSeatBySeatTypeId(data.seat_type_id) */
     
-    passengerData.dataValues.boardingPassId = data.dataValues.boarding_pass_id
-    passengerData.dataValues.purchaseId = data.dataValues.purchase_id
-    passengerData.dataValues.seatTypeId = data.dataValues.seat_Type_id
-    passengerData.dataValues.seatId = seatData.dataValues.seat_id
-
+    passengersArr = assignSeat(passengersArr, flightData.dataValues.airplane_id, )
+    
     const newFlightData = {
       ...flightData.dataValues, 
-      passengers: {
-        ...passengerData.dataValues
-      }
+      passengers: passengersArr
     }
     
     return newFlightData
+  },
+
+  findBoargingPassByPurchaseId: async (purchase_id) => {
+    const data = await BoardingPass.findAll({
+      where: {
+        purchase_id
+      }
+    })
+    return data
+  },
+
+  findOccupiedSeats: async () => {
+    const data = await BoardingPass.findAll({
+      where: {
+        seat_id: {[Op.not]: null}
+      }
+    })
+    return data
   }
 }
 

@@ -9,16 +9,14 @@ const passengerService = {
       .then(data => {
         responses.success({
           res,
-          status: 200,
-          message: `Passenger with id: ${id} was retrieved successfully`,
+          code: 200,
           data
         })
       })
       .catch(err => {
         responses.error({
           res,
-          status: 400,
-          message: 'Passenger not found',
+          code: 400,
           data: err
         })
       })

@@ -1,19 +1,14 @@
-const success = ({res, status, message, data}) => {
-    res.status(status).json({
-        error: false,
-        status,
-        message,
+const success = ({res, code, data}) => {
+    res.status(code).json({
+        code,
         data
     })
 }
 
-const error = ({res, status, message, data, fields}) => {
-    res.status(status).json({
-        error: true,
-        status,
-        message,
-        data,
-        fields
+const error = ({res, code, data}) => {
+    res.status(code).json({
+        code,
+        data
     })
 }
 

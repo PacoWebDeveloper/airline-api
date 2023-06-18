@@ -13,12 +13,12 @@ const boardingPassController = {
     const passengerData = await passengerController.findPassengerById(data.passenger_id)
 
     const seatData = await seatTypeController.findSeatBySeatTypeId(data.seat_type_id)
-    
+
     passengerData.dataValues.boardingPassId = data.dataValues.boarding_pass_id
     passengerData.dataValues.purchaseId = data.dataValues.purchase_id
-    passengerData.dataValues.seatTypeId = data.dataValues.seat_Type_id
+    passengerData.dataValues.seatTypeId = data.dataValues.seat_type_id
     passengerData.dataValues.seatId = seatData.dataValues.seat_id
-
+    
     const newFlightData = {
       ...flightData.dataValues, 
       passengers: {

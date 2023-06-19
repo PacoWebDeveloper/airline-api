@@ -1,7 +1,9 @@
 const BoardingPass = require('../models/boardingPass.model')
 const flight = require('../flight/flight.controller')
 const passengerController = require('../passenger/passenger.controller')
-const seatTypeController = require('../seatType/seatType.controller')
+const Seat = require('../seat/seat.controller')
+const { Op } = require('sequelize')
+const assignSeat = require('../utils/assignSeat')
 
 const boardingPassController = {
   findBoardingPassByFlightId: async (flighId) => {
@@ -24,15 +26,21 @@ const boardingPassController = {
       passengersArr.push(passenger) 
     }
 
-    /* const seatData = await seatTypeController.findSeatBySeatTypeId(data.seat_type_id) */
+    const occupiedSeats = await boardingPassController.findOccupiedSeats(data.dataValues.seat_type_id)
+
+    let newPassengers = []
     
-    passengersArr = assignSeat(passengersArr, flightData.dataValues.airplane_id, )
-    
+    try {
+      newPassengers = await assignSeat(passengersArr, flightData.dataValues.airplane_id, occupiedSeats)
+    } catch(err) {
+      throw err
+    }    
+
     const newFlightData = {
       ...flightData.dataValues, 
-      passengers: passengersArr
+      passengers: newPassengers
     }
-    
+
     return newFlightData
   },
 
@@ -45,13 +53,23 @@ const boardingPassController = {
     return data
   },
 
-  findOccupiedSeats: async () => {
+  findOccupiedSeats: async (seat_type_id) => {
     const data = await BoardingPass.findAll({
       where: {
-        seat_id: {[Op.not]: null}
+        [Op.and]: {
+          seat_id: {
+            [Op.not]: null
+          },
+          seat_type_id        
+        }
+        
       }
     })
     return data
+  },
+
+  findFreeSeatInSpecificClass: async (seatTypeId, occupiesSeatsList ) => {
+    const freeSeats = await Seat
   }
 }
 

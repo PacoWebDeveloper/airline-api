@@ -1,4 +1,4 @@
-const SeatType = require('../models/seat.model')
+const SeatType = require('../models/seatType.model')
 
 const seatTypeController = {
   findSeatBySeatTypeId: async (id) => {
